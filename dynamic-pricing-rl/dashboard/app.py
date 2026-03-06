@@ -1,10 +1,14 @@
-"""Streamlit dashboard for AI pricing recommendations."""
+"""OptiPrice - Professional AI Dynamic Pricing Dashboard"""
 
 import streamlit as st
 import sys
 import os
 import logging
 import requests
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Setup path and imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -19,57 +23,104 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Page configuration
+# 🎨 Professional Page Configuration
 st.set_page_config(
-    page_title="Dynamic Pricing Engine",
+    page_title="OptiPrice - AI Dynamic Pricing",
+    page_icon="💰",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Title and description
-st.title('🤖 Dynamic Pricing AI Engine')
-st.markdown(
-    'Intelligent pricing optimization powered by Deep Q-Learning (DQN) reinforcement learning'
-)
+# Custom CSS for better styling
+st.markdown("""
+<style>
+    .metric-card {
+        background-color: #f0f2f6;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .success-card {
+        background-color: #d4edda;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #28a745;
+    }
+    .ai-recommendation {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# Sidebar with information
+# 🎯 Professional Title
+st.title("💰 OptiPrice AI Pricing Platform")
+st.caption("⚡ Reinforcement Learning Powered Dynamic Pricing Optimization")
+
+# 📊 Sidebar - Product Information
 with st.sidebar:
-    st.header('ℹ️ About')
+    st.header('ℹ️ About OptiPrice')
     st.markdown("""
-    **Dynamic Pricing Optimization** uses deep reinforcement learning to recommend
-    optimal prices based on:
-    - Market demand levels
-    - Competitor pricing
-    - Inventory constraints
+    **OptiPrice** is an AI-powered dynamic pricing engine that maximizes revenue 
+    using Deep Q-Learning (DQN) reinforcement learning.
     
-    The AI agent learns to maximize revenue while respecting market conditions.
+    ### Key Features:
+    - 🤖 Deep Q-Network pricing optimization
+    - 📊 Real-time market analysis
+    - 💡 Competitor price monitoring
+    - 📈 Revenue maximization
+    - 🎯 Inventory-aware pricing
     """)
     
-    st.header('⚙️ Configuration')
-    st.write(f"""
-    - **Price Range**: ${ENVIRONMENT_CONFIG['price_min']} - ${ENVIRONMENT_CONFIG['price_max']}
-    - **Base Demand**: {ENVIRONMENT_CONFIG['base_demand']:.0f} units
-    - **Price Elasticity**: {ENVIRONMENT_CONFIG['elasticity']}
-    """)
+    st.divider()
+    
+    st.header('⚙️ System Configuration')
+    col_config1, col_config2 = st.columns(2)
+    with col_config1:
+        st.metric(
+            "Price Range",
+            f"${ENVIRONMENT_CONFIG['price_min']}-${ENVIRONMENT_CONFIG['price_max']}"
+        )
+        st.metric(
+            "Base Demand",
+            f"{int(ENVIRONMENT_CONFIG['base_demand'])} units"
+        )
+    with col_config2:
+        st.metric(
+            "Elasticity",
+            f"{ENVIRONMENT_CONFIG['elasticity']}"
+        )
+        st.metric(
+            "Price Step",
+            f"${ENVIRONMENT_CONFIG['price_step']}"
+        )
+    
+    st.divider()
+    st.caption("🚀 Powered by PyTorch DQN | Deep Reinforcement Learning")
 
-# Input section
-st.header('📊 Market Conditions')
+# 🎮 Market Conditions Input Section
+st.header('📊 Market Conditions Simulator')
+st.markdown("**Adjust market parameters to get AI pricing recommendations**")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
     demand_level = st.slider(
-        'Demand Level',
-        min_value=0,
-        max_value=200,
+        '📈 Demand Level',
+        min_value=0.0,
+        max_value=200.0,
         value=API_CONFIG['default_demand_level'],
-        step=10,
+        step=10.0,
         help="Current market demand (0-200 scale)"
     )
 
 with col2:
     competitor_price = st.slider(
-        'Competitor Price',
+        '🏆 Competitor Price',
         min_value=float(ENVIRONMENT_CONFIG['price_min']),
         max_value=float(ENVIRONMENT_CONFIG['price_max']),
         value=API_CONFIG['default_competitor_price'],
@@ -79,11 +130,11 @@ with col2:
 
 with col3:
     inventory_level = st.slider(
-        'Inventory Level',
-        min_value=0,
-        max_value=2000,
+        '📦 Inventory Level',
+        min_value=0.0,
+        max_value=2000.0,
         value=API_CONFIG['default_inventory_level'],
-        step=100,
+        step=100.0,
         help="Current inventory units"
     )
 
