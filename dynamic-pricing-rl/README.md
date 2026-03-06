@@ -344,4 +344,3 @@ Contributions welcome! Areas for enhancement:
 **Ready to deploy?** This project is structured for easy containerization and cloud deployment.
 
 For questions or improvements, open an issue or pull request!
-# Dynamic Pricing Optimization using Reinforcement Learning\n\nThis project implements a Deep Q-Network (DQN) agent that learns optimal pricing strategies by interacting with a simulated market environment.\n\nStructure: data/, src/, notebooks/, dashboard/, utils/, models/\n\nRun quick start:\n1. Create a virtualenv and install requirements: `pip install -r requirements.txt`\n2. Train: `python src/train_agent.py` (from project root)\n3. Evaluate: `python src/evaluate_model.py`\n4. Run dashboard: `streamlit run dashboard/app.py`\n\nSee `notebooks/exploration.ipynb` for interactive exploration."
