@@ -1,0 +1,46 @@
+# Git files
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project specific
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+tests/
+test_*.py
+
+# Logs and temporary files
+*.log
+.cache/
+.pytest_cache/
+htmlcov/
+
+# Large files
+/models/*.pth
+/data/large_dataset.csv
+/logs/archived/*
+
+# OS
+.DS_Store
+Thumbs.db
